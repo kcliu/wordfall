@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<overlay id="vocab-overlay" 
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="vocab.js"/>
+   <popup id="contentAreaContextMenu">
+    <menuitem id="vocab-contextMenuItem" label="memorize" oncommand="onCommand(event);"/>
+	</popup>
+   
+</overlay>
+

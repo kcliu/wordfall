@@ -1,0 +1,4 @@
+content     vocab    chrome/chromeFiles/content/
+overlay		chrome://browser/content/browser.xul	chrome://vocab/content/overlay.xul
+
+
