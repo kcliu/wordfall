@@ -1,8 +1,9 @@
-//var Vocab = function() {
-    function onCommand(event) {
-		alert("test");
-		//var selection = document.commandDispatcher.focusedWindow.getSelection().toString();
-		//alert(selection);		
+vocab = {
+    onCommand: function (event) {
+		var selection = document.commandDispatcher.focusedWindow.getSelection().toString();
+		alert(selection);		
+		//creatDB();
+		//insert(selection);
 	}
-//}();
+};
 
