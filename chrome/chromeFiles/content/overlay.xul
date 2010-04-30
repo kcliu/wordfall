@@ -3,7 +3,7 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="vocab.js"/>
    <popup id="contentAreaContextMenu">
-    <menuitem id="vocab-contextMenuItem" label="memorize" oncommand="vocab.onCommand(event);"/>
+    <menuitem id="vocab-contextMenuItem" label="memorize" oncommand="vocab.onCommand();"/>
 	</popup>
    
 </overlay>
