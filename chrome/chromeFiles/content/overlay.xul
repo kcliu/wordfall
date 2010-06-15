@@ -1,10 +1,23 @@
 <?xml version="1.0"?>
 <overlay id="vocab-overlay" 
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
-  <script src="vocab.js"/>
-   <popup id="contentAreaContextMenu">
-    <menuitem id="vocab-contextMenuItem" label="memorize" oncommand="vocab.onCommand();"/>
+    <script src="chrome://vocab/content/vocab.js"/>
+
+    <!-- content menu overlay -->
+    <popup id="contentAreaContextMenu">
+        <menuitem id="vocab-contextMenuItem" label="memorize" oncommand="vocab.onCommand();"/>
 	</popup>
    
+    <!-- statusbar overlay -->
+    <statusbar id="status-bar"> 
+	    <statusbarpanel id="vocabStatusBar"
+						label="wordfall"
+						context="rankingTable"
+						onclick="vocab.showResult();"
+		/>
+			<menupopup id="rankingTable"
+		>
+			</menupopup>
+    </statusbar>
 </overlay>
 
