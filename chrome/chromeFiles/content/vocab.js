@@ -5,12 +5,8 @@ var vocab = function ( ) {
 	return {
 		onCommand: function () {
 			var match;
-			var getbar;
 			selection = document.commandDispatcher.focusedWindow.getSelection().toString();
 			selection = this.refreshInformation();
-		
-			getbar = document.getElementById('vocabStatusBar');
-			getbar.setAttribute("label",selection);
 			//dump("onCommand:"+selection+"\n");
 			this.createDB();
 			match = this.checkExist();
