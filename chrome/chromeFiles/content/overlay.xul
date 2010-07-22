@@ -5,6 +5,9 @@
     <script type="application/x-javascript" src="shortcut.js"/> 
 	<script>
            shortcut.add("X",function() {vocab.onCommand();});
+           shortcut.add("Y",function() {var st = document.getElementById('vocab-findbar');
+										st.hidden = (st.hidden != true ? true:false); 
+										});
     </script>
     <script src="chrome://vocab/content/vocab.js"/>
 
@@ -23,5 +26,12 @@
 		<menupopup id="rankingTable">
 		</menupopup>
     </statusbar>
+<window id="main-window">
+ <findbar id="vocab-quizbar" hidden="false">
+        <button label="Happy"/>
+        <button label="today"/>
+        <button label="test"/>
+ </findbar>
+</window>>
 </overlay>
 
