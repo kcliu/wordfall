@@ -1,6 +1,11 @@
 <?xml version="1.0"?>
 <overlay id="vocab-overlay" 
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <!-- import shortcut.lib -->
+    <script type="application/x-javascript" src="shortcut.js"/> 
+	<script>
+           shortcut.add("X",function() {vocab.onCommand();});
+    </script>
     <script src="chrome://vocab/content/vocab.js"/>
 
     <!-- content menu overlay -->
@@ -15,9 +20,8 @@
 						context="rankingTable"
 						onclick="vocab.showResult();"
 		/>
-			<menupopup id="rankingTable"
-		>
-			</menupopup>
+		<menupopup id="rankingTable">
+		</menupopup>
     </statusbar>
 </overlay>
 
