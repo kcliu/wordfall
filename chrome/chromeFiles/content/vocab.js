@@ -5,11 +5,9 @@ var vocab = function ( ) {
 	return {
 		onCommand: function () {
 			var match;
-			var getbar;
 			selection = document.commandDispatcher.focusedWindow.getSelection().toString();
-			selection = this.refreshInformation();
-			getbar = document.getElementById('vocabStatusBar');
-			getbar.setAttribute("label",selection);
+			selection = this.checkGoogleDict();
+			this.showFeedback(selection);
 			//dump("onCommand:"+selection+"\n");
 			this.createDB();
 			match = this.checkExist();
@@ -114,7 +112,7 @@ var vocab = function ( ) {
 				DBConn = storageService.openDatabase(file); // Will also create the file if it does not exist  
 			}
 		},
-		refreshInformation: function() {
+		checkGoogleDict: function() {
      		var httpRequest = null;
      		var fullUrl = "http://www.google.com/dictionary?aq=f&langpair=en|en&q=_WORD_&hl=en";
 			fullUrl = fullUrl.replace("_WORD_",selection);
@@ -124,9 +122,14 @@ var vocab = function ( ) {
      		httpRequest.send("");
 	     	var output = httpRequest.responseText;
 			output = output.match(/meta name="description" content="(\w+)/);
-			//dump("refreshInformation:get word from google:"+RegExp.$1+"\n");
+			//dump("get word from google:"+RegExp.$1+"\n");
 			return RegExp.$1;
   		},
+		showFeedback: function(word) {
+			var getbar;
+            getbar = document.getElementById('vocabStatusBar');
+			getbar.setAttribute("label",word);
+		},
 		test: function() {
 		    var httpRequest = null;
 			var fullUrl = "http://www.google.com.tw/dictionary/wordlist";

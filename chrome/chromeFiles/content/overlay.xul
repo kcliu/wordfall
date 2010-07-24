@@ -4,10 +4,11 @@
     <!-- import shortcut.lib -->
     <script type="application/x-javascript" src="shortcut.js"/> 
 	<script>
-           shortcut.add("X",function() {vocab.onCommand();});
-           shortcut.add("Y",function() {var st = document.getElementById('vocab-findbar');
-										st.hidden = (st.hidden != true ? true:false); 
-										});
+           shortcut.add("CTRL+X",function() { vocab.onCommand();});
+           shortcut.add("CTRL+Y",function() { var st = document.getElementById('vocab-quizbar');
+										      st.hidden = (st.hidden != true ? true:false); 
+										      document.getElementById('quiz-text').focus();
+										    });
     </script>
     <script src="chrome://vocab/content/vocab.js"/>
 
@@ -27,11 +28,13 @@
 		</menupopup>
     </statusbar>
 <window id="main-window">
- <findbar id="vocab-quizbar" hidden="false">
-        <button label="Happy"/>
-        <button label="today"/>
-        <button label="test"/>
- </findbar>
-</window>>
+<vbox id="browser-bottombox">
+   <findbar id="vocab-quizbar" hidden="true" height="33">
+		<label value="Quiz:"/>
+		<textbox id="quiz-text"/>
+		<label value="  Here will show the sentence"/>
+   </findbar>
+</vbox>
+</window>
 </overlay>
 
