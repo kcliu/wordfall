@@ -134,7 +134,7 @@ var vocab = function ( ) {
 			DBstmt.params.quiz = sentence;  
 			DBstmt.params.word = selection;  
 			DBstmt.executeStep();
-			DBstmt = DBConn.createStatement("UPDATE vocab SET tence =:tense WHERE words=:word");
+			DBstmt = DBConn.createStatement("UPDATE vocab SET tense =:tense WHERE words=:word");
 			DBstmt.params.tense = origin_selection;  
 			DBstmt.params.word = selection;  
 			DBstmt.executeStep();
