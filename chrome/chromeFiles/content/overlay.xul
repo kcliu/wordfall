@@ -8,6 +8,8 @@
            shortcut.add("CTRL+Y",function() { var st = document.getElementById('vocab-quizbar');
 										      st.hidden = (st.hidden != true ? true:false); 
 										      document.getElementById('quiz-text').focus();
+											  if ( st.hidden === false )
+											      vocab.getQuizByDB();
 										    });
     </script>
     <script src="chrome://vocab/content/vocab.js"/>
@@ -29,10 +31,10 @@
     </statusbar>
 <window id="main-window">
 <vbox id="browser-bottombox">
-   <findbar id="vocab-quizbar" hidden="true" height="33">
+   <findbar id="vocab-quizbar" hidden="true" height="33" multiline="true">
 		<label value="Quiz:"/>
-		<textbox id="quiz-text"/>
-		<label value="  Here will show the sentence"/>
+		<textbox id="quiz-text" onkeydown="if (event.keyCode === 13) vocab.checkQuiz()"/>
+		<label id="quiz" value="  Here will show the sentence"/>
    </findbar>
 </vbox>
 </window>
