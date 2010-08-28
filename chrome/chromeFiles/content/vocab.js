@@ -12,10 +12,14 @@ var vocab = function ( ) {
 
 			selectionObj = document.commandDispatcher.focusedWindow.getSelection();
 			origin_selection = selectionObj.toString();
-
+			String.prototype.trim = function (){return this.replace(/(^\s*)|(\s*$)/g,'');}
+			origin_selection = origin_selection.trim(origin_selection);
 			sentence = this.getSentence(selectionObj);
-
 			selection = this.checkGoogleDict();
+			if ( selection === "" ) {
+				return;	
+			}
+			//alert("selection:"+selection);
 			this.showFeedback(selection);
 			//dump("onCommand:"+selection+"\n");
 			this.createDB();
@@ -166,14 +170,17 @@ var vocab = function ( ) {
      		var httpRequest = null;
      		var fullUrl = "http://www.google.com/dictionary?aq=f&langpair=en|en&q=_WORD_&hl=en";
 			fullUrl = fullUrl.replace("_WORD_",origin_selection);
-
+			//alert("fullUrl:"+fullUrl);
      		httpRequest = new XMLHttpRequest();
      		httpRequest.open("GET", fullUrl, false);
      		httpRequest.send("");
 	     	var output = httpRequest.responseText;
-			output = output.match(/meta name="description" content="(\w+)/);
-			//dump("get word from google:"+RegExp.$1+"\n");
-			return RegExp.$1;
+		dump(output);
+			output = output.match(/meta name="description" content="(.*?):/);
+			output = RegExp.$1;
+			output = output.replace(/·/g,"");
+			dump("get word from google:"+output+"\n");
+			return output;
   		},
 		showFeedback: function(word) {
 			var getbar;
@@ -183,7 +190,7 @@ var vocab = function ( ) {
 		showSentence: function(db_quiz) {
 			var quiz;
 			//get quiz from DB
-            
+			
 			quiz = document.getElementById('quiz');
 			quiz.setAttribute("value",db_quiz);
 		},
