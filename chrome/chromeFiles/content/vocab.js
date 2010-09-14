@@ -129,7 +129,7 @@ var vocab = function ( ) {
 			var DBstmt;
 			dump("updateDB\n");
 			value++;
-			dump("value="+value+"\n");
+			dump("word count="+value+"\n");
 			DBstmt = DBConn.createStatement("UPDATE vocab SET counts =:count WHERE words=:word");
 			DBstmt.params.word = selection;  
 			DBstmt.params.count = value;  
@@ -175,7 +175,7 @@ var vocab = function ( ) {
      		httpRequest.open("GET", fullUrl, false);
      		httpRequest.send("");
 	     	var output = httpRequest.responseText;
-		dump(output);
+		    //dump(output);
 			output = output.match(/meta name="description" content="(.*?):/);
 			output = RegExp.$1;
 			output = output.replace(/·/g,"");
@@ -195,33 +195,34 @@ var vocab = function ( ) {
 			quiz.setAttribute("value",db_quiz);
 		},
 		getSentence: function(select) {
-			var selection;
-	    	var range = document.createRange();
-            range.selectNode(select.focusNode.parentNode);
-	        return this.parse(range.toString(), select.focusOffset);
-	        //alert(selection.indexOf(selection,0));
+			var tip = select.focusNode.parentNode;
+			var children = tip.childNodes;
+			//dump(select.focusNode.textContent);
+			//dump("focusoffset:"+select.focusOffset+"\n");
+	        return this.parse(select.focusNode.textContent, select.focusOffset);
 		},
-		parse: function (selection, offset) {
+		parse: function (paragraph, offset) {
 			var s;
 			var start = 0;
-			var end = selection.length;
-			function getStart(ch, ret){
+			var end = paragraph.length;
+			alert(offset);
+			function getStart(ch, ret) {
 			dump("\nch.length="+ch.length+"\n");
-				s = selection.lastIndexOf(ch, offset);
+				s = paragraph.lastIndexOf(ch, offset);
 				if (!ret) s += ch.length;
 			dump("\ns="+s+"\n");
-				while(!ret && s >= ch.length && selection.charAt(s) != " "){
-					s = selection.lastIndexOf(ch, s-ch.length-1) + ch.length;
+				while(!ret && s >= ch.length && paragraph.charAt(s) != " "){
+					s = paragraph.lastIndexOf(ch, s-ch.length-1) + ch.length;
 				}
 				if (s > start) {
 					start = s;
 				}
 			}
 			function getEnd(ch, ret){
-				s = selection.indexOf(ch, offset);
+				s = paragraph.indexOf(ch, offset);
 				if (!ret) s += ch.length;
-				while(!ret && s < selection.length && s >= ch.length && selection.charAt(s) != " "){
-					s = selection.indexOf(ch, s+1) + ch.length;
+				while(!ret && s < paragraph.length && s >= ch.length && paragraph.charAt(s) != " "){
+					s = paragraph.indexOf(ch, s+1) + ch.length;
 				}
 				if (s < end && s >= ch.length) {
 					end = s;
@@ -235,8 +236,8 @@ var vocab = function ( ) {
 			getEnd("?");
 			getEnd("!");
 			getEnd("\n", true);
-			//alert(selection.substring(start, end)); //get the sentence
-			return selection.substring(start, end);
+			dump("\nstart="+start+"\nend=" +end+"\n"); //get the sentence
+			return paragraph.substring(start, end);
 		},
 		makeQuiz: function(word, db_quiz){
 			//alert(word.length+"\n");
