@@ -78,10 +78,10 @@ var vocab = function ( ) {
 				query_word.push( DBstmt.row.tense );
 				query_sentence.push( DBstmt.row.sentences );
 			}
-			for(var i = 0;i < 5;i++) {
+			/*for(var i = 0;i < 5;i++) {
 				dump("word:"+query_word[i]+"\n");
 				dump("sentence:"+query_sentence[i]+"\n");
-			}
+			}*/
 			var result = [query_word[index],query_sentence[index]];
 			DBstmt.reset();
 			return result;
@@ -127,9 +127,9 @@ var vocab = function ( ) {
 		},
 		updateDB: function(value) {
 			var DBstmt;
-			dump("updateDB\n");
+			//dump("updateDB\n");
 			value++;
-			dump("word count="+value+"\n");
+			//dump("word count="+value+"\n");
 			DBstmt = DBConn.createStatement("UPDATE vocab SET counts =:count WHERE words=:word");
 			DBstmt.params.word = selection;  
 			DBstmt.params.count = value;  
@@ -197,21 +197,36 @@ var vocab = function ( ) {
 		getSentence: function(select) {
 			var tip = select.focusNode.parentNode;
 			var children = tip.childNodes;
+			var offset = 0;
+			for (var i = 0; i < children.length ; i++) {
+				if (children[i] == select.focusNode) {
+					break;
+				} else {
+					 dump("textContent length:"+children[i].textContent.length);
+					 offset += children[i].textContent.length;
+				}
+			}
+			offset += select.focusOffset;	
 			//dump(select.focusNode.textContent);
 			//dump("focusoffset:"+select.focusOffset+"\n");
-	        return this.parse(select.focusNode.textContent, select.focusOffset);
+	        return this.parse(tip.textContent, offset);
 		},
 		parse: function (paragraph, offset) {
 			var s;
 			var start = 0;
 			var end = paragraph.length;
-			alert(offset);
+			offset = offset - 1;
 			function getStart(ch, ret) {
-			dump("\nch.length="+ch.length+"\n");
 				s = paragraph.lastIndexOf(ch, offset);
 				if (!ret) s += ch.length;
-			dump("\ns="+s+"\n");
-				while(!ret && s >= ch.length && paragraph.charAt(s) != " "){
+//			if (!ret) alert(ch+"true1");
+//			if (s >= ch.length) alert(ch+"true2");
+//			if (paragraph.charAt(s) !== " ") {
+//				alert(ch+"true3");
+//			} else {
+//				alert(paragraph.charAt(s));
+//			}
+				while(!ret && s >= ch.length && paragraph.charAt(s) !== " "){
 					s = paragraph.lastIndexOf(ch, s-ch.length-1) + ch.length;
 				}
 				if (s > start) {
@@ -237,6 +252,7 @@ var vocab = function ( ) {
 			getEnd("!");
 			getEnd("\n", true);
 			dump("\nstart="+start+"\nend=" +end+"\n"); //get the sentence
+			dump(paragraph.substring(start,end));
 			return paragraph.substring(start, end);
 		},
 		makeQuiz: function(word, db_quiz){
