@@ -215,9 +215,9 @@ var vocab = function ( ) {
 			var s;
 			var start = 0;
 			var end = paragraph.length;
-			offset = offset - 1;
-			function getStart(ch, ret) {
-				s = paragraph.lastIndexOf(ch, offset);
+			function getStart(ch, ret, StartOffset) {
+				StartOffset--;
+				s = paragraph.lastIndexOf(ch, StartOffset);
 				if (!ret) s += ch.length;
 //			if (!ret) alert(ch+"true1");
 //			if (s >= ch.length) alert(ch+"true2");
@@ -226,33 +226,34 @@ var vocab = function ( ) {
 //			} else {
 //				alert(paragraph.charAt(s));
 //			}
-				while(!ret && s >= ch.length && paragraph.charAt(s) !== " "){
-					s = paragraph.lastIndexOf(ch, s-ch.length-1) + ch.length;
-				}
+				//while(!ret && s >= ch.length && paragraph.charAt(s) !== " "){
+				//	s = paragraph.lastIndexOf(ch, s-ch.length-1) + ch.length;
+				//}
 				if (s > start) {
 					start = s;
 				}
 			}
-			function getEnd(ch, ret){
-				s = paragraph.indexOf(ch, offset);
+			function getEnd(ch, ret, EndOffset){
+				EndOffset--;
+				s = paragraph.indexOf(ch, EndOffset);
 				if (!ret) s += ch.length;
-				while(!ret && s < paragraph.length && s >= ch.length && paragraph.charAt(s) != " "){
-					s = paragraph.indexOf(ch, s+1) + ch.length;
-				}
+				//while(!ret && s < paragraph.length && s >= ch.length && paragraph.charAt(s) != " "){
+				//	s = paragraph.indexOf(ch, s+1) + ch.length;
+				//}
 				if (s < end && s >= ch.length) {
 					end = s;
 				}
 			}
-			getStart(".");
-			getStart("?");
-			getStart("!");
-			getStart("\n", true);
-			getEnd(".");
-			getEnd("?");
-			getEnd("!");
-			getEnd("\n", true);
-			dump("\nstart="+start+"\nend=" +end+"\n"); //get the sentence
-			dump(paragraph.substring(start,end));
+			getStart(".",false, offset);
+			getStart("?",false, offset);
+			getStart("!",false, offset);
+			getStart("\n", true, offset);
+			getEnd(".",false, offset);
+			getEnd("?",false, offset);
+			getEnd("!",false, offset);
+			getEnd("\n", true, offset);
+			//dump("\nstart="+start+"\nend=" +end+"\n"); //get the sentence
+			//dump(paragraph.substring(start,end));
 			return paragraph.substring(start, end);
 		},
 		makeQuiz: function(word, db_quiz){
